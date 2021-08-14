@@ -44,7 +44,7 @@ app.post('/signin', (req, res) => {
         })
 })
 
-app.post('/register', (req, res) => {
+app.post('/signup', (req, res) => {
     const { email, name, password } = req.body
     const hash = bcrypt.hashSync(password)
     db.transaction(trx => {
@@ -68,7 +68,7 @@ app.post('/register', (req, res) => {
             })
             .then(trx.commit)
             .catch(trx.rollback)
-    }).catch(err => {
+    }).catch(() => {
         res.status(400).json('unable to register')
     })
 })
