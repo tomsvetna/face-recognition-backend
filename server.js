@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs')
 const cors = require('cors')
 const knex = require('knex')
 
+const PORT = process.env.PORT || 3000
+
 const db = knex({
     client: 'pg',
     connection: {
@@ -95,6 +97,6 @@ app.put('/image', (req, res) => {
         .catch(() => res.status(400).json('unable to get entries'))
 })
 
-app.listen(3000, () => {
-    console.log('app is running on port 3000')
+app.listen(PORT, () => {
+    console.log(`app is running on port ${PORT}`)
 })
