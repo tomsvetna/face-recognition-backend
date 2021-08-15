@@ -5,15 +5,25 @@ const knex = require('knex')
 
 const PORT = process.env.PORT || 3000
 
-const db = knex({
-    client: 'pg',
-    connection: {
-        host: '127.0.0.1',
-        user: 'postgres',
-        password: 'postgres',
-        database: 'face-recognition',
-    },
-})
+const dbSettings =
+    process.env.NODE_ENV === 'development'
+        ? {
+              client: 'pg',
+              connection: {
+                  host: '127.0.0.1',
+                  user: 'postgres',
+                  password: 'postgres',
+                  database: 'face-recognition',
+              },
+          }
+        : {
+              connectionString: process.env.DATABASE_URL,
+              ssl: {
+                  rejectUnauthorized: false,
+              },
+          }
+
+const db = knex(dbSettings)
 
 const app = express()
 
